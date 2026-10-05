@@ -1,0 +1,62 @@
+{
+  "name": "@ip-messenger/desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local-first peer-to-peer messaging for Windows",
+  "author": "IP Messenger",
+  "main": "dist-electron/electron.js",
+  "scripts": {
+    "dev": "vite",
+    "build:renderer": "vite build",
+    "build:main": "tsc -p tsconfig.node.json",
+    "copy:preload": "node scripts/copy-preload.mjs",
+    "build": "npm run build:renderer && npm run build:main && npm run copy:preload",
+    "package:windows": "npm run build && electron-builder --win nsis",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ip-messenger/networking": "*",
+    "@ip-messenger/models": "*",
+    "@ip-messenger/protocol": "*",
+    "@ip-messenger/shared": "*",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-router-dom": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "^5.8.0",
+    "vite": "^5.4.0",
+    "electron-builder": "^26.0.0",
+    "electron": "31.7.7"
+  },
+  "build": {
+    "appId": "com.ipmessenger.desktop",
+    "productName": "IP Messenger",
+    "artifactName": "IPMessenger-Setup.exe",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": ["nsis"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "IP Messenger",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}

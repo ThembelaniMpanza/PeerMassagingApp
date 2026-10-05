@@ -1,0 +1,29 @@
+{
+  "name": "ip-messenger",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "test:peer": "tsx --test test/peer-services.test.ts",
+    "test:native": "dotnet build test/native-interop/NativeInterop.csproj && tsx --test test/native-interop.test.ts",
+    "dev:test-peer": "tsx scripts/lan-test-peer.ts",
+    "dev:mobile": "npm --workspace apps/mobile run start",
+    "dev:mobile:android": "npm --workspace apps/mobile run start -- --dev-client --android --localhost --port 8081",
+    "build:mobile:android": "npm --workspace apps/mobile run android -- --port 8081",
+    "dev:desktop": "npm --workspace apps/desktop run dev",
+    "build:desktop": "npm --workspace apps/desktop run build",
+    "package:windows": "npm --workspace apps/desktop run package:windows",
+    "build:native-windows": "dotnet publish apps/windows-native/IPMessenger.Native.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o apps/windows-native/publish",
+    "verify": "npm run typecheck && npm run build:desktop",
+    "typecheck": "tsc --noEmit -p apps/mobile/tsconfig.json && tsc --noEmit -p apps/desktop/tsconfig.json && tsc --noEmit -p packages/shared/tsconfig.json && tsc --noEmit -p packages/models/tsconfig.json && tsc --noEmit -p packages/protocol/tsconfig.json && tsc --noEmit -p packages/networking/tsconfig.json",
+    "lint": "npm run typecheck"
+  },
+  "packageManager": "npm@10.9.3",
+  "devDependencies": {
+    "electron-builder": "^26.15.3",
+    "tsx": "^4.23.13"
+  }
+}

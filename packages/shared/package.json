@@ -1,0 +1,18 @@
+{
+  "name": "@ip-messenger/shared",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ip-messenger/models": "*",
+    "@ip-messenger/networking": "*",
+    "@ip-messenger/protocol": "*"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

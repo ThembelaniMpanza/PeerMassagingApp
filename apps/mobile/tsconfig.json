@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@ip-messenger/*": ["../../packages/*/src/index.ts"]
+    },
+    "jsx": "react-jsx",
+    "types": ["react", "react-native"]
+  },
+  "include": ["./**/*.ts", "./**/*.tsx"]
+}
